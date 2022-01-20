@@ -35,9 +35,9 @@ void scal(size_t N, double alpha, double* x){
 
 // inner product
 double dot(size_t N, const double* x, const double* y){ 
-    double ans;
+    double ans=0;
 
-    #pragma omp parallel for
+    #pragma omp parallel for reduction(+:ans)
     for(size_t i=0; i<N; i++){
         ans += x[i] * y[i];
     }
