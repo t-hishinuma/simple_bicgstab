@@ -50,3 +50,24 @@ double nrm2(size_t N, const double* x, const double* y){
     return sqrt(dot(N, x, y));
 }
 
+// copy (y=x)
+void copy(size_t N, const double* x, double* y){ 
+    #pragma omp parallel for
+    for(size_t i=0; i<N; i++){
+        y[i] = x[i];
+    }
+}
+
+// matvec:y=Ax
+void matvec(int N, 
+        const int* row_ptr, const int* col_ind, const double* val, 
+        const double* x, double* y)
+{
+#pragma omp parallel for
+    for(size_t i = 0; i < N; i++){
+        y[i] = 0;
+        for(size_t j = row_ptr[i]; j < row_ptr[i+1]; j++){
+            y[i] += x[col_ind[j]] * val[j];
+        }
+    }
+}
