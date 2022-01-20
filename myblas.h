@@ -1,4 +1,5 @@
 #include<omp.h>
+#include<math.h>
 
 // y = alpha * x + y
 void axpy(size_t N, double alpha, const double* x, double* y){ 
@@ -25,7 +26,7 @@ void xpay(size_t N, double alpha, double* x, const double* y){
 }
 
 // x = alpha * x
-double scal(size_t N, double alpha, double* x){ 
+void scal(size_t N, double alpha, double* x){ 
     #pragma omp parallel for
     for(size_t i=0; i<N; i++){
         x[i] = alpha * x[i];
@@ -46,6 +47,6 @@ double dot(size_t N, const double* x, const double* y){
 
 // 2nrm
 double nrm2(size_t N, const double* x, const double* y){ 
-    return sqrt(dot(x, y));
+    return sqrt(dot(N, x, y));
 }
 
