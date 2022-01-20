@@ -2,12 +2,20 @@ CC := gcc
 CFLAGS := -O3 -Wall -std=c99
 CLIB := -fopenmp -lm
 
-.PHONY: test
+LIB := include/myblas.h include/precond.h include/SpUtil.h
+SRC := bicgstab.c
 
-all: bicgstab.o
+OBJ := bicgstab.o
 
-bicgstab.o: bicgstab.c myblas.h SpUtil.h
-	$(CC) $(CFLAGS) $< -o $@ $(CLIB)
+.PHONY: test clean
 
-test: bicgstab.o
-	$@ ./data/test.mtx
+all: $(OBJ)
+
+$(OBJ): $(SRC) $(LIB)
+	$(CC) $(CFLAGS) $(SRC) -o $@ $(CLIB)
+
+test: $(OBJ)
+	./$< ./data/test.mtx
+
+clean:
+	- rm $(OBJ)
