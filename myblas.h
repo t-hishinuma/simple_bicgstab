@@ -46,8 +46,8 @@ double dot(size_t N, const double* x, const double* y){
 }
 
 // 2nrm
-double nrm2(size_t N, const double* x, const double* y){ 
-    return sqrt(dot(N, x, y));
+double nrm2(size_t N, const double* x){ 
+    return sqrt(dot(N, x, x));
 }
 
 // copy (y=x)
